@@ -1,0 +1,226 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>选择功能</title>
+<link rel="stylesheet" type="text/css" href="css/layui.css">
+<style type="text/css">
+body{
+	padding:0;
+	margin:0;
+	color:#444;
+	background:#f2f2f2;
+}
+*{
+	padding:0;
+	margin:0;
+	border:0;
+	list-style: none;
+	text-decoration: none;
+}
+.wrap{
+	width:100%;
+	max-width: 600px;
+	margin:0 auto;
+}
+.label-selected{
+	width: 100%;
+	min-height:38px;
+	margin:10px 0;
+	border:1px solid #ccc;
+	background-color: #fff;
+	position: relative;
+}
+.cell{
+	display: block;
+	width:90px;
+	height:28px;
+	line-height: 28px;
+	border:3px;
+	background:#009688;
+	color:#fff;
+	text-align: center;
+}
+.label-selected li {
+	display: inline-block;
+	height: 27px;
+	line-height: 27px;
+	font-size: .8rem;
+	padding: 0 1rem;
+	border: 1px solid #e6e6e6;
+	border-radius: 2px;
+	cursor: pointer;
+	margin: 4px 2px;
+	color: #666;
+}
+#labelItem{
+	margin-bottom: 10px;
+	display: none;
+}
+.label-item {
+	border: 1px solid #e6e6e6;
+	padding: 10px;
+	border-radius: 0 2px 2px 0;
+	position: relative;
+	overflow: hidden;
+	background: #fff;
+}
+.label-item li {
+	display: inline-block;
+	height: 27px;
+	line-height: 27px;
+	font-size: .8rem;
+	padding: 0 1rem;
+	border: 1px solid #e6e6e6;
+	border-radius: 2px;
+	cursor: pointer;
+	margin-bottom: 5px;
+	margin-left: 2px;
+	color: #666;
+}
+.label-item .selected{
+	color:#ccc;
+}
+</style>
+
+</head>
+<body>
+
+<div class="wrap">
+	<div class="label-selected">
+		<a href="javascript:;" class="layui-btn layui-btn-sm show-labelitem" style="float: right; margin: 4px; display: block;line-height: 30px;">选择功能 </a>
+		<a href="javascript:;" class="layui-btn layui-btn-sm hide-labelitem" style="float: right; margin: 4px; display: none;line-height: 30px;">取消 </a>
+		<input type="hidden" name="label">
+	</div>
+	<div class="layui-col-md12" id="labelItem">
+	  <!--标签库-->
+	  <div class="label-item">
+		<a href="javascript:;" class="replacelable" style="position: absolute;right:1rem;bottom:.75rem;color: #1994dc" onselectstart="return false"></a>
+		<h3>玩家类</h3>
+		<li data="2-5"><span>全局碰撞箱</span></li>
+		<li data="16"><span>杀戮光环</span></li>
+		<li data="17"><span>大范围杀戮</span></li>
+		<li data="6"><span>AC连点</span></li>
+		<li data="18"><span>超高cps</span></li>
+		<li data="19"><span>自动瞄准</span></li>
+		<li data="10"><span>自动拆床</span></li>
+		<li data="20"><span>GodMode</span></li>
+		<h3>移动类</h3>
+		<li data="12"><span>空中跳跃</span></li>
+		<li data="13"><span>玩家加速</span></li>
+		<li data="14"><span>飞行</span></li>
+		<li data="15"><span>穿墙</span></li>
+		<li data="21"><span>跳跃增强</span></li>
+		<li data="22"><span>高跳</span></li>
+		<li data="23"><span>自动搭路</span></li>
+		<li data="24"><span>防击退</span></li>
+		<li data="25"><span></span>虚空回弹</li>
+		<li data="26"><span>锁定玩家</span></li>
+		<h3>世界类</h3>
+		<li data="27"><span>潜行矿透</span></li>
+		<li data="28"><span>创造之手</span></li>
+		<li data="29"><span>抓取ip</span></li>
+		<li data="30"><span>玩家射线（esp）</span></li>
+		<li data="31"><span>夜视</span></li>
+		<li data="32"><span>自动爬墙</span></li>
+		<li data="33"><span>全局加速</span></li>
+		<li data="34"><span>退出世界</span></li>
+		<h3>其他功能</h3>
+		<li data="35"><span>紧急退出</span></li>
+		<li data="36"><span>自定义水印</span></li>
+		<li data="37"><span>自定义ui</span></li>
+		<li data="38"><span>清除游客数据</span></li>
+		<li data="39"><span>快捷悬浮窗</span></li>
+		<li data="40"><span>远程商店</span></li>
+	  </div>
+	</div>
+	<a href="javascript:;" class="layui-btn" id="cell">购买</a>
+	<a href=# class="layui-btn" id="cell">返回</a>
+</div>
+	
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/layer.js"></script>
+<script type="text/javascript">	
+$(function(){
+  $(".show-labelitem").on("click",function(){
+    $(this).hide();
+    $(".hide-labelitem").show();
+    $("#labelItem").show();
+  });
+  $(".hide-labelitem").on("click",function(){
+    $(this).hide();
+    $(".show-labelitem").show();
+    $("#labelItem").hide();
+  });
+  $(".label-item").on("click","li",function(){
+    var id = $(this).attr("data");
+    var text = $(this).children("span").html();
+    var labelHTML = "<li data='"+id+"''>x "+text+"</li>";
+    if($(this).hasClass("selected")){
+      return false;
+    }else if($(".label-selected").children("li").length >= 100){
+      layer.msg("最多可以选择8个哦");
+      return false;
+    }
+    $(".label-selected").append(labelHTML);
+    val = '';
+    for(var i = 0; i < $(".label-selected").children("li").length; i++){
+      val += $(".label-selected").children("li").eq(i).attr("data")+',';
+    }
+    $("input[name='label']").val(val);
+    $(this).addClass("selected");
+  });
+  var val = "";
+  $(".label-selected").on("click","li",function(){
+    var id = $(this).attr("data");
+    val = '';
+    $(this).remove();
+    for(var i = 0; i < $(".label-selected").children("li").length; i++){
+      val += $(".label-selected").children("li").eq(i).attr("data")+',';
+    }
+    $("input[name='label']").val(val);
+    $(".label-item").find("li[data='"+id+"']").removeClass("selected");
+  });
+
+
+  //点击更换标签
+  var limit = 0;
+  $(".replacelable").on("click",function(){
+    layer.load(1);
+    limit += 32;
+    $.ajax({
+      url:window.location.href,
+      type:"post",
+      datatype:"json",
+      data:{
+        labellimit:limit
+      },
+      success:function(data){
+        layer.closeAll('loading');
+        $(".label-item").find("li").remove();//删除原先所有，本来想让数据表随机搜索的，想着有点mmp，就没搞，用的是limit
+        var html = '';
+        for(var i in data){
+          html += "<li data=\""+data[i].term_id+"\">x<span>"+data[i].name+"</span></li>";//拼接标签
+        }
+        $(".label-item").append(html);//追加至文档
+      },
+      error:function(){
+        layer.closeAll('loading');
+        layer.msg("错误~~~");
+      }
+    })
+  })
+  //获取标签
+  $("#cell").on("click",function(){
+  	if($("input[name='label']").val() == ""){
+  		return false;
+  	}else{
+		layer.msg("选中购买："+$("input[name='label']").val());
+		window.location.href = './02.html?'+'uname='+$("input[name='label']").val()
+  	}
+  })
+})
+</script>
+
+</body>
+</html>
